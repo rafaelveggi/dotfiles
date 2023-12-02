@@ -6,7 +6,7 @@ alias Ss="git status "
 alias S="git status --porcelain -b "
 alias A="git add -A"
 
-function C() { command git commit -m "$@"; }
+function C() { git commit -m "$*"; }
 
 function github-login() {
   local name email filename

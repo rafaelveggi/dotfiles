@@ -11,7 +11,7 @@ function set_prompt_colors() {
   status="$(git status --porcelain -b 2>/dev/null)"
 
   if [ ! "$status" ]; then
-    color="\[\e[1;37m\]" # blue
+    color="\[\e[1;96m\]" 
     PS1="${color}\u@\w\$${reset} "
     return
   fi
@@ -20,7 +20,7 @@ function set_prompt_colors() {
   *"behind"* | *"no branch"*)
     color="\[\e[1;41m\]" # red
     ;;
-  *"ahead"* | *" M "* | *" A "* | *"?? "* | *"No commits yet on "*)
+  *"ahead"* | *"M "* | *"A "* | *"?? "* | *"No commits yet on "*)
     color="\[\e[1;33m\]" # yellow
     ;;
   *)

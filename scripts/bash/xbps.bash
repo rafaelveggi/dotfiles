@@ -1,7 +1,7 @@
 #!/bin/bash
 
 alias inst="sudo xbps-install --sync --yes "
-alias update="sudo xbps-install --sync --update --verbose "
+alias update="sudo xbps-install --sync --update "
 alias remove="sudo xbps-remove --clean-cache --remove-orphans "
 alias search="xbps-query --regex --repository --search "
 
@@ -24,7 +24,7 @@ updt() {
       awk '{printf "%s%s", (NR==1)?"(":"|", $0}; END{print ")"}'
   )"
 
-  with_info="$(xbps-query --repository --regex --search "$to_update")"
+  with_info="$(xbps-query --repository --regex --search "$to_update" | cut -d' ' -f2- )"
   echo "$with_info"
 
 }

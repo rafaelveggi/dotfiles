@@ -1,3 +1,5 @@
+#!/bin/sh
+
 alias cat="bat"
 alias dmesg="sudo dmesg"
 alias l="ls -lhA "

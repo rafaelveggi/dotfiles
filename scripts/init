@@ -30,9 +30,9 @@ fi
 
 bashrc="${out}/.bashrc"
 bash_profile="${out}/.bash_profile"
-
 scripts_bashrc=(
   "./scripts/rc.bash"
+  "./scripts/history.bash"
   "./scripts/ps1.bash"
   "./scripts/aliases.bash"
   "./scripts/sudo.bash"
@@ -69,4 +69,5 @@ if [ -e "${HOME}/.bash_profile" ] || [ -e "${HOME}/.bashrc" ]; then
   # shellcheck disable=1091
   source "${HOME}/.bashrc"
   echo Done.
+  exec bash
 fi
