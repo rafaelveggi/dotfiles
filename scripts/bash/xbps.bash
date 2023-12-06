@@ -14,17 +14,3 @@ pkg-update() {
   sudo xbps-install --repository hostdir/binpkgs/nonfree "$pkg"
   cd "$dir" || exit
 }
-
-updt() {
-  ### TBD
-  local to_update with_info
-  to_update="$(
-    xbps-install -Mun |
-      awk '{print $1}' |
-      awk '{printf "%s%s", (NR==1)?"(":"|", $0}; END{print ")"}'
-  )"
-
-  with_info="$(xbps-query --repository --regex --search "$to_update" | cut -d' ' -f2- )"
-  echo "$with_info"
-
-}
