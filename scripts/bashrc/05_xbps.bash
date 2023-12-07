@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 alias inst="sudo xbps-install --sync --yes "
 alias update="sudo xbps-install --sync --update "

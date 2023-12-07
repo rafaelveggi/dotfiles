@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 alias L="git log"
 alias M="git commit --amend"

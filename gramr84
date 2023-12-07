@@ -1,2 +1,0 @@
-setxkbmap -I$HOME/.xkb -layout us -variant altgr-intl -option
-

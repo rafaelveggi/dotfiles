@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 alias cat="bat"
 alias dmesg="sudo dmesg"
@@ -9,5 +9,5 @@ alias shutdown="sudo shutdown -h now"
 alias updatedb="sudo updatedb"
 alias vi="nvim"
 alias x="startx"
-alias rc="nvim ~/.bashrc; source ~/.bashrc"
+alias rc="source ~/.bashrc"
 alias rmf="rm -rf "

@@ -1,17 +1,13 @@
-#!/bin/bash
-
-# PS1='[\u@\h \W]\$ '
+#!/usr/bin/bash
 
 function set_prompt_colors() {
-  local color
-  local reset="\[\e[0m\]"
+  local color last_commit_msg status reset
 
-  local status
-
+  reset="\[\e[0m\]"
   status="$(git status --porcelain -b 2>/dev/null)"
 
   if [ ! "$status" ]; then
-    color="\[\e[1;96m\]" 
+    color="\[\e[1;96m\]"
     PS1="${color}\u@\w\$${reset} "
     return
   fi
@@ -27,9 +23,9 @@ function set_prompt_colors() {
     color="\[\e[1;32m\]" # green
     ;;
   esac
-  local last_commit_msg="$(git log -i --pretty=%B | head -n 1)"
+  last_commit_msg="$(git log -i --pretty=%B | head -n 1)"
 
-  PS1="\u@\h${color}[\w]${reset} "${last_commit_msg}"\n\$ "
+  PS1="\u@\h${color}[\w]${reset} [${last_commit_msg}]\n\$ "
 }
 
 PROMPT_COMMAND="set_prompt_colors"
