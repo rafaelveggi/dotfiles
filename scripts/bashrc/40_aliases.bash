@@ -11,3 +11,5 @@ alias vi="nvim"
 alias x="startx"
 alias rc="source ~/.bashrc"
 alias rmf="rm -rf "
+
+alias top="ytop "
