@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 alias cat="bat"
 alias dmesg="sudo dmesg"
@@ -12,4 +12,4 @@ alias x="startx"
 alias rc="source ~/.bashrc"
 alias rmf="rm -rf "
 
-alias top="ytop "
+alias top="htop "

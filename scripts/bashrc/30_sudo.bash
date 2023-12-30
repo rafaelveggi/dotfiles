@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 function sudo() {
   if [[ $1 == 'vi' ]]; then # replace vi for nvim for convenience, otherwise executes sudo as usual

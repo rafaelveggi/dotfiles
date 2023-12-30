@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 HISTSIZE=100000
 HISTFILESIZE=200000
