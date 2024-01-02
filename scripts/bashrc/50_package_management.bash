@@ -45,7 +45,7 @@ case $(uname) in
 FreeBSD)
 	freebsd
   ;;
-Void)
+Linux) # @TODO maybe fixme for other distros, if you ever hop again...
 	voidlinux
   ;;
 esac
