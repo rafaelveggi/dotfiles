@@ -1,0 +1,85 @@
+# shellcheck shell=bash
+
+#######
+# install:
+# bat nvim htop
+#######
+
+function __git_commit() { git commit -m "$*"; }
+
+function __void-package_install() {
+    if [ -d "$HOME/void-packages" ]; then
+        dir=$(pwd)
+        pkg="${1:-google-chrome}"
+        cd ~/void-packages || exit
+        git pull
+        ./xbps-src pkg "$pkg"
+        sudo xbps-install --repository hostdir/binpkgs/nonfree "$pkg"
+        cd "$dir" || exit
+    else
+        echo "The directory void-packages is missing. Aborting"
+        return 1
+    fi
+}
+
+function __package_management() {
+    case "$1" in
+        "i")
+            sudo xbps-install --sync --yes "${@:2}"
+        ;;
+        "u")
+            sudo xbps-install --sync --update "${@:2}"
+        ;;
+        "s")
+            xbps-query --regex --repository --search "${@:2}"
+        ;;
+        "r")
+            sudo xbps-remove --clean-cache --remove-orphans "${@:2}"
+        ;;
+        "p")
+            __void-package_install "${@:2}"
+        ;;
+        *)
+            echo -e "Invalid operation. Use:"
+            echo -e "i - install"
+            echo -e "p - install (void-packages)"
+            echo -e "r - remove"
+            echo -e "s - search"
+            echo -e "u - update"
+    esac
+}
+
+function s() {
+    if [[ $1 == 'vi' ]]; then
+        # replaces vi for nvim for convenience
+        command sudo nvim "${@:2}"
+    else
+        command sudo "$@"
+    fi
+}
+
+alias cat="bat"
+alias l="ls -lhA "
+alias ls="ls --color=auto "
+alias reboot="sudo reboot"
+alias shutdown="sudo shutdown -h now"
+alias vi="nvim"
+alias x="startx"
+alias rc="source ~/.bashrc"
+alias rmf="rm -rf "
+alias top="htop "
+
+alias L="git log "
+alias M="git commit --amend "
+alias S="git status "
+alias Ss="git status --porcelain -b "
+alias A="git add -A "
+alias C="__git_commit "
+
+alias dmesg="sudo dmesg"
+alias updatedb="sudo updatedb"
+
+alias nrd="npm run dev"
+alias nrs="npm run serve"
+
+alias p="__package_management "

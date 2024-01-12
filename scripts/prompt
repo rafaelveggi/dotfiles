@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 
 function set_prompt_colors() {
   local color last_commit_msg status reset
