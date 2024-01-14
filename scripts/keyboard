@@ -1,7 +1,6 @@
 # shellcheck shell=sh
 
 if [ -n "$DISPLAY" ]; then
-    echo "mama mia"
     setxkbmap -layout us -variant altgr-intl -option caps:escape
 else # doesn't work.
   sudo loadkeys - << EOF
