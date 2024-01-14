@@ -1,10 +1,5 @@
 # shellcheck shell=bash
 
-#######
-# install:
-# bat nvim htop
-#######
-
 function __git_commit() { git commit -m "$*"; }
 
 function __void-package_install() {
@@ -22,22 +17,35 @@ function __void-package_install() {
     fi
 }
 
+function __xbps-search() {
+    local query results count
+    query="${*}"
+    results=$(xbps-query --regex --repository --search "$query")
+    count=$(echo "$results" | wc --lines)
+    if [[ $count == 1 ]]; then
+        xbps-query -R "$query"
+    else
+        echo "$results"
+    fi
+}
+
 function __package_management() {
+    local query="${*:2}"
     case "$1" in
         "i")
-            sudo xbps-install --sync --yes "${@:2}"
+            sudo xbps-install --sync --yes "$query"
         ;;
         "u")
-            sudo xbps-install --sync --update "${@:2}"
+            sudo xbps-install --sync --update "$query"
         ;;
         "s")
-            xbps-query --regex --repository --search "${@:2}"
+            __xbps-search "$query"
         ;;
         "r")
-            sudo xbps-remove --clean-cache --remove-orphans "${@:2}"
+            sudo xbps-remove --recursive --clean-cache --remove-orphans "$query"
         ;;
         "p")
-            __void-package_install "${@:2}"
+            __void-package_install "$query"
         ;;
         *)
             echo -e "Invalid operation. Use:"
