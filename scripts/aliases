@@ -23,7 +23,7 @@ function __xbps-search() {
     
     time0=$(date +%s%N)
     results=$(xbps-query --regex --repository --search "${*}")
-    count=$(echo "$results" | wc --lines)
+    count=$(echo "$results" | grep -c "\S")
     case "$count" in
         0)
             time_total=$(get_total_time_milli "$time0")
@@ -52,7 +52,7 @@ function __package_management() {
             sudo xbps-install --sync --yes "$query"
         ;;
         "u")
-            sudo xbps-install --sync --update "$query"
+            sudo xbps-install --sync --update --verbose --verbose
         ;;
         "s")
             __xbps-search "$query"
@@ -60,20 +60,20 @@ function __package_management() {
         "r")
             sudo xbps-remove --recursive --clean-cache --remove-orphans "$query"
         ;;
-        "p")
-            __void-package_install "$query"
-        ;;
+        # "p")
+        #     __void-package_install "$query"
+        # ;;
         *)
             echo -e "Invalid operation. Use:"
-            echo -e "i - install"
-            echo -e "p - install (void-packages)"
-            echo -e "r - remove"
-            echo -e "s - search"
+            echo -e "i - install <pkg>"
+            # echo -e "p - install (void-packages)"
+            echo -e "r - remove <pkg>"
+            echo -e "s - search <regexp>"
             echo -e "u - update"
     esac
 }
 
-function s() {
+function __sudo() {
     if [[ $1 == 'vi' ]]; then
         # replaces vi for nvim for convenience
         command sudo nvim "${@:2}"
@@ -107,3 +107,4 @@ alias nrd="npm run dev"
 alias nrs="npm run serve"
 
 alias p="__package_management "
+alias sudo="__sudo"
