@@ -12,7 +12,6 @@ _shebang="#!$(command -v bash)"
     "aliases"     \
     "keyboard"    \
     ; do
-        echo "# shellcheck source=$_dir/$script"
         echo "source $_dir/$script"
     done
 } > "bashrc"
@@ -22,9 +21,9 @@ ln -fs "$_dir/bashrc" "${HOME}/.bashrc"
 {
     echo -e "$_shebang"
     echo
+    echo export MY_SCRIPTS_SRC="$_dir"
     grep -v "^#!" "$_dir/vars"
     echo
-    echo "# shellcheck source=${HOME}/.bashrc"
     echo source "${HOME}/.bashrc"
 } > "bash_profile"
 chmod +x "$_dir/bash_profile"

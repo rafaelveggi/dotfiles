@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+source "$MY_SCRIPTS_SRC"/utils.bash
 
 function __git_commit() { git commit -m "$*"; }
 
@@ -18,15 +19,30 @@ function __void-package_install() {
 }
 
 function __xbps-search() {
-    local query results count
-    query="${*}"
-    results=$(xbps-query --regex --repository --search "$query")
+    local count is_installed query result results time_total time0
+    
+    time0=$(date +%s%N)
+    results=$(xbps-query --regex --repository --search "${*}")
     count=$(echo "$results" | wc --lines)
-    if [[ $count == 1 ]]; then
-        xbps-query -R "$query"
-    else
-        echo "$results"
-    fi
+    case "$count" in
+        0)
+            time_total=$(get_total_time_milli "$time0")
+            echo "No results - ${time_total}ms"
+        ;;
+        1)
+            is_installed=$([ "$(echo "$results" | awk '{print $1}')" = "[*]" ] && echo "[*]" || echo "[-]")
+            result=$(echo "$results" | awk '{print $2}')
+            xbps-query -R "$result"
+            echo
+            time_total=$(get_total_time_milli "$time0")
+            echo -e "${is_installed} \033[1m${result}\033[0m (${time_total}ms)"
+        ;;
+        *)
+            time_total=$(get_total_time_milli "$time0")
+            echo "$results"
+            echo "$count results - ${time_total}ms"
+        ;;
+    esac
 }
 
 function __package_management() {
