@@ -49,7 +49,7 @@ function __package_management() {
     local query="${*:2}"
     case "$1" in
         "i")
-            sudo xbps-install --sync --yes "$query"
+            sudo xbps-install --sync --yes $query
         ;;
         "u")
             sudo xbps-install --sync --update --verbose --verbose
@@ -58,7 +58,7 @@ function __package_management() {
             __xbps-search "$query"
         ;;
         "r")
-            sudo xbps-remove --recursive --clean-cache --remove-orphans "$query"
+            sudo xbps-remove --recursive --clean-cache --remove-orphans ${*:2}
         ;;
         # "p")
         #     __void-package_install "$query"
@@ -124,5 +124,6 @@ alias nrd="npm run dev"
 alias nrs="npm run serve"
 
 alias p="__package_management "
+alias svi="\sudo nvim"
 alias sudo="__sudo"
 alias man="__man"

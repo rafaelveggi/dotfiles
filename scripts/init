@@ -8,6 +8,7 @@ _shebang="#!$(command -v bash)"
     echo
     grep -v "^#!" "$_dir/history"
     for script in \
+    "bash_config" \
     "prompt"      \
     "aliases"     \
     "keyboard"    \
