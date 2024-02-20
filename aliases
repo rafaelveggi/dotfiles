@@ -1,77 +1,7 @@
 # shellcheck shell=bash
-source "$MY_SCRIPTS_SRC"/utils.bash
+source ~/dotfiles/utils.bash
 
 function __git_commit() { git commit -m "$*"; }
-
-function __void-package_install() {
-    if [ -d "$HOME/void-packages" ]; then
-        dir=$(pwd)
-        pkg="${1:-google-chrome}"
-        cd ~/void-packages || exit
-        git pull
-        ./xbps-src pkg "$pkg"
-        sudo xbps-install --repository hostdir/binpkgs/nonfree "$pkg"
-        cd "$dir" || exit
-    else
-        echo "The directory void-packages is missing. Aborting"
-        return 1
-    fi
-}
-
-function __xbps-search() {
-    local count is_installed query result results time_total time0
-    
-    time0=$(date +%s%N)
-    results=$(xbps-query --regex --repository --search "${*}")
-    count=$(echo "$results" | grep -c "\S")
-    case "$count" in
-        0)
-            time_total=$(get_total_time_milli "$time0")
-            echo "No results - ${time_total}ms"
-        ;;
-        1)
-            is_installed=$([ "$(echo "$results" | awk '{print $1}')" = "[*]" ] && echo "[*]" || echo "[-]")
-            result=$(echo "$results" | awk '{print $2}')
-            xbps-query -R "$result"
-            echo
-            time_total=$(get_total_time_milli "$time0")
-            echo -e "${is_installed} \033[1m${result}\033[0m (${time_total}ms)"
-        ;;
-        *)
-            time_total=$(get_total_time_milli "$time0")
-            echo "$results"
-            echo "$count results - ${time_total}ms"
-        ;;
-    esac
-}
-
-function __package_management() {
-    local query="${*:2}"
-    case "$1" in
-        "i")
-            sudo xbps-install --sync --yes $query
-        ;;
-        "u")
-            sudo xbps-install --sync --update --verbose --verbose
-        ;;
-        "s")
-            __xbps-search "$query"
-        ;;
-        "r")
-            sudo xbps-remove --recursive --clean-cache --remove-orphans ${*:2}
-        ;;
-        # "p")
-        #     __void-package_install "$query"
-        # ;;
-        *)
-            echo -e "Invalid operation. Use:"
-            echo -e "i - install <pkg>"
-            # echo -e "p - install (void-packages)"
-            echo -e "r - remove <pkg>"
-            echo -e "s - search <regexp>"
-            echo -e "u - update"
-    esac
-}
 
 function __sudo() {
     if [[ $1 == 'vi' ]]; then
@@ -86,8 +16,10 @@ function __man() {
     if command man "$1" &>/dev/null; then
         command man "$1"
     else
-        local url="https://dyn.manpages.debian.org/bookworm/debian-goodies/${1}.1.en.gz"
+    	local domain="dyn.manpages.debian.org"
+        local url="https://${domain}/bookworm/debian-goodies/${1}.1.en.gz"
         local http_code
+	echo "Fetching manual from ${domain}"
         if ! http_code=$(curl -s -o /dev/null -w "%{http_code}" "$url"); then
             echo "Error fetching page"
         elif [ "$http_code" -eq 404 ]; then
@@ -97,7 +29,6 @@ function __man() {
         fi
     fi
 }
-
 
 alias cat="bat"
 alias l="ls -lhA "
@@ -109,6 +40,7 @@ alias x="startx"
 alias rc="source ~/.bashrc"
 alias rmf="rm -rf "
 alias top="htop "
+alias updatedb="sudo updatedb"
 
 alias L="git log "
 alias M="git commit --amend "
@@ -118,12 +50,10 @@ alias A="git add -A "
 alias C="__git_commit "
 
 alias dmesg="sudo dmesg"
-alias updatedb="sudo updatedb"
 
 alias nrd="npm run dev"
 alias nrs="npm run serve"
 
-alias p="__package_management "
-alias svi="\sudo nvim"
 alias sudo="__sudo"
 alias man="__man"
+

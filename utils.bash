@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 function get_total_time_milli() {
     local time_start time_end time_total

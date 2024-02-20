@@ -11,6 +11,7 @@ _shebang="#!$(command -v bash)"
     "bash_config" \
     "prompt"      \
     "aliases"     \
+    "dnf-mgmt"    \
     "keyboard"    \
     ; do
         echo "source $_dir/$script"

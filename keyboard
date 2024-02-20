@@ -2,14 +2,4 @@
 
 if [ -n "$DISPLAY" ]; then
     setxkbmap -layout us -variant altgr-intl -option caps:escape
-else # doesn't work.
-  sudo loadkeys - << EOF
-include "qwerty-layout"
-include "linux-with-alt-and-altgr"
-include "compose.latin1"
-include "euro1.map"
-strings as usual
-keycode 58 = Escape
-keycode 100 = AltGr
-EOF
-fi
+fi 
