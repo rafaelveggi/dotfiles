@@ -1,3 +1,0 @@
-dev ALL=(ALL) NOPASSWD: /usr/bin/openfortivpn
-dev ALL=(ALL) NOPASSWD: /usr/bin/pkill  openfortivpn
-dev ALL=(ALL) NOPASSWD: /usr/bin/updatedb

@@ -1,4 +1,3 @@
-# shellcheck shell=bash
 source ~/dotfiles/utils.bash
 
 function __git_commit() { git commit -m "$*"; }
@@ -31,11 +30,13 @@ function __man() {
 }
 
 alias cat="bat"
-alias l="ls -lhA "
-alias ls="ls --color=auto "
+alias ls="lsd -lh"
+alias l="lsd -lhA "
+alias lt="lsd --tree "
 alias reboot="sudo reboot"
 alias shutdown="sudo shutdown -h now"
 alias vi="nvim"
+alias svi="sudo nvim "
 alias x="startx"
 alias rc="source ~/.bashrc"
 alias rmf="rm -rf "

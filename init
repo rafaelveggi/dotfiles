@@ -1,34 +1,29 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
-_dir=$(readlink -f .)
-_shebang="#!$(command -v bash)"
+echo " 
+stty -ixon
 
-{
-    echo -e "$_shebang"
-    echo
-    grep -v "^#!" "$_dir/history"
-    for script in \
-    "bash_config" \
-    "prompt"      \
-    "aliases"     \
-    "dnf-mgmt"    \
-    "keyboard"    \
-    ; do
-        echo "source $_dir/$script"
-    done
-} > "bashrc"
-chmod +x "$_dir/bashrc"
-ln -fs "$_dir/bashrc" "${HOME}/.bashrc"
+. ${HOME}/dotfiles/history.bash
+. ${HOME}/dotfiles/prompt.bash
+. ${HOME}/dotfiles/aliases.bash
+. ${HOME}/dotfiles/xbps.bash
+. ${HOME}/dotfiles/keyboard.bash
 
-{
-    echo -e "$_shebang"
-    echo
-    echo export MY_SCRIPTS_SRC="$_dir"
-    grep -v "^#!" "$_dir/vars"
-    echo
-    echo source "${HOME}/.bashrc"
-} > "bash_profile"
-chmod +x "$_dir/bash_profile"
-ln -fs "$_dir/bash_profile" "${HOME}/.bash_profile"
+eval \"\$(ssh-agent -s)\" &> /dev/null
+ssh-add ~/.ssh/comparis_ed25519 &> /dev/null
+export MANPAGER=nvimpager
+" > "${HOME}/.bashrc"
 
-echo Done.
+echo "
+.${HOME}/dotfiles/vpn.bash o
+" > "${HOME}/.bash_logout"
+
+echo "
+if [ -f .bashrc ]; then . .bashrc; fi
+
+if ! [[ \"\$PATH\" =~ \"\$HOME/.local/bin:\$HOME/bin:\" ]]; then
+    PATH=\"\$HOME/.local/bin:\$HOME/bin:\$PATH\"
+fi
+export PATH
+" > "${HOME}/.bash_profile"
+
