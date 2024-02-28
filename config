@@ -1,6 +1,0 @@
-### configuration file for openfortivpn, see man openfortivpn(1) ###
-host = vpn.comparis.ch
-port = 10443
-username = rafael.veggi
-password = VHFNJCg3CkJ4XqB
-

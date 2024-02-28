@@ -1,2 +1,0 @@
-./dotfiles/vpn-logout
-

@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 
 echo " 
+#!/usr/bin/bash
+
 stty -ixon
 
 . ${HOME}/dotfiles/history.bash
@@ -11,14 +13,19 @@ stty -ixon
 
 eval \"\$(ssh-agent -s)\" &> /dev/null
 ssh-add ~/.ssh/comparis_ed25519 &> /dev/null
-export MANPAGER=nvimpager
 " > "${HOME}/.bashrc"
 
 echo "
-.${HOME}/dotfiles/vpn.bash o
+#!/usr/bin/bash
+
+vpn o
 " > "${HOME}/.bash_logout"
 
 echo "
+#!/usr/bin/bash
+
+export MANPAGER=nvimpager
+
 if [ -f .bashrc ]; then . .bashrc; fi
 
 if ! [[ \"\$PATH\" =~ \"\$HOME/.local/bin:\$HOME/bin:\" ]]; then

@@ -30,6 +30,7 @@ function __man() {
 }
 
 alias cat="bat"
+alias grep="grep --color=auto "
 alias ls="lsd -lh"
 alias l="lsd -lhA "
 alias lt="lsd --tree "
