@@ -13,6 +13,8 @@ stty -ixon
 
 eval \"\$(ssh-agent -s)\" &> /dev/null
 ssh-add ~/.ssh/comparis_ed25519 &> /dev/null
+
+source <(cod init \$\$ bash)
 " > "${HOME}/.bashrc"
 
 echo "
